@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TasbihKu Digital</title>
+
+  <style>
+    :root {
+      --body-bg-1: #020617;
+      --body-bg-2: #064e3b;
+      --glow: rgba(34, 197, 94, 0.22);
+      --card-bg: rgba(15, 23, 42, 0.72);
+      --card-border: rgba(255,255,255,0.12);
+      --text-main: #ffffff;
+      --text-soft: #bbf7d0;
+      --text-note: #a7f3d0;
+      --gold: #fef3c7;
+      --accent: #22c55e;
+      --accent-2: #10b981;
+      --button-main-1: #16a34a;
+      --button-main-2: #22c55e;
+      --button-blue-1: #0ea5e9;
+      --button-blue-2: #2563eb;
+      --button-danger-1: #dc2626;
+      --button-danger-2: #f97316;
+      --inner-bg-1: #022c22;
+      --inner-bg-2: #064e3b;
+      --input-bg: rgba(255,255,255,0.08);
+      --glass-bg: rgba(255,255,255,0.08);
+      --empty-progress: rgba(255,255,255,0.11);
+    }
+
+    body.theme-emerald {
+      --body-bg-1: #020617;
+      --body-bg-2: #064e3b;
+      --glow: rgba(34, 197, 94, 0.22);
+      --card-bg: rgba(15, 23, 42, 0.72);
+      --text-soft: #bbf7d0;
+      --text-note: #a7f3d0;
+      --gold: #fef3c7;
+      --accent: #22c55e;
+      --accent-2: #10b981;
+      --button-main-1: #16a34a;
+      --button-main-2: #22c55e;
+      --inner-bg-1: #022c22;
+      --inner-bg-2: #064e3b;
+    }
+
+    body.theme-blue {
+      --body-bg-1: #020617;
+      --body-bg-2: #1e3a8a;
+      --glow: rgba(59, 130, 246, 0.24);
+      --card-bg: rgba(15, 23, 42, 0.74);
+      --text-soft: #bfdbfe;
+      --text-note: #bae6fd;
+      --gold: #dbeafe;
+      --accent: #38bdf8;
+      --accent-2: #2563eb;
+      --button-main-1: #0284c7;
+      --button-main-2: #2563eb;
+      --inner-bg-1: #082f49;
+      --inner-bg-2: #1e3a8a;
+    }
+
+    body.theme-gold {
+      --body-bg-1: #1c1917;
+      --body-bg-2: #713f12;
+      --glow: rgba(250, 204, 21, 0.20);
+      --card-bg: rgba(28, 25, 23, 0.76);
+      --text-soft: #fde68a;
+      --text-note: #fef3c7;
+      --gold: #facc15;
+      --accent: #facc15;
+      --accent-2: #d97706;
+      --button-main-1: #ca8a04;
+      --button-main-2: #f59e0b;
+      --inner-bg-1: #422006;
+      --inner-bg-2: #78350f;
+    }
+
+    body.theme-purple {
+      --body-bg-1: #111827;
+      --body-bg-2: #581c87;
+      --glow: rgba(168, 85, 247, 0.22);
+      --card-bg: rgba(30, 27, 75, 0.73);
+      --text-soft: #e9d5ff;
+      --text-note: #ddd6fe;
+      --gold: #f5d0fe;
+      --accent: #c084fc;
+      --accent-2: #a855f7;
+      --button-main-1: #9333ea;
+      --button-main-2: #c084fc;
+      --inner-bg-1: #3b0764;
+      --inner-bg-2: #581c87;
+    }
+
+    body.theme-rose {
+      --body-bg-1: #1f2937;
+      --body-bg-2: #9f1239;
+      --glow: rgba(244, 63, 94, 0.20);
+      --card-bg: rgba(76, 5, 25, 0.70);
+      --text-soft: #fecdd3;
+      --text-note: #ffe4e6;
+      --gold: #fff7ed;
+      --accent: #fb7185;
+      --accent-2: #e11d48;
+      --button-main-1: #e11d48;
+      --button-main-2: #fb7185;
+      --inner-bg-1: #4c0519;
+      --inner-bg-2: #881337;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, var(--glow), transparent 35%),
+        linear-gradient(135deg, var(--body-bg-1), var(--body-bg-2));
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 18px;
+      overflow-x: hidden;
+      transition: background 0.35s ease;
+    }
+
+    .app {
+      width: 430px;
+      max-width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 32px;
+      padding: 24px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+      backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .app::before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      background: color-mix(in srgb, var(--accent) 22%, transparent);
+      border-radius: 50%;
+      right: -90px;
+      top: -90px;
+    }
+
+    .top {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .logo {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 14px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, var(--accent-2), var(--gold));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 36px;
+      box-shadow: 0 16px 35px color-mix(in srgb, var(--accent) 30%, transparent);
+    }
+
+    h1 {
+      font-size: clamp(26px, 7vw, 30px);
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      color: var(--text-soft);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .controls {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-size: 13px;
+      color: var(--text-soft);
+      font-weight: 700;
+      margin-bottom: 7px;
+      display: block;
+    }
+
+    select,
+    input {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: var(--input-bg);
+      color: white;
+      border-radius: 16px;
+      padding: 14px;
+      outline: none;
+      font-size: 15px;
+    }
+
+    select:focus,
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent);
+    }
+
+    select option {
+      color: #111827;
+    }
+
+    .target-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .circle-wrap {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      margin: 24px 0;
+    }
+
+    .circle {
+      width: min(240px, 68vw);
+      height: min(240px, 68vw);
+      border-radius: 50%;
+      background:
+        conic-gradient(var(--accent) 0deg, var(--empty-progress) 0deg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow:
+        inset 0 0 40px rgba(0,0,0,0.25),
+        0 22px 50px rgba(0,0,0,0.28);
+      transition: 0.25s;
+    }
+
+    .circle-inner {
+      width: min(200px, 57vw);
+      height: min(200px, 57vw);
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--inner-bg-1), var(--inner-bg-2));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: inset 0 0 30px rgba(255,255,255,0.06);
+      cursor: pointer;
+      user-select: none;
+      transition: 0.18s;
+      text-align: center;
+      padding: 12px;
+    }
+
+    .circle-inner:active {
+      transform: scale(0.96);
+    }
+
+    .count {
+      font-size: clamp(46px, 14vw, 58px);
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .target-text {
+      color: var(--text-soft);
+      margin-top: 8px;
+      font-size: 15px;
+    }
+
+    .zikir-text {
+      color: var(--gold);
+      margin-top: 11px;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .buttons {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    button {
+      border: none;
+      padding: 14px;
+      border-radius: 16px;
+      font-weight: 900;
+      cursor: pointer;
+      color: white;
+      transition: 0.22s;
+      font-size: 15px;
+      min-height: 48px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    .btn-main {
+      background: linear-gradient(135deg, var(--button-main-1), var(--button-main-2));
+      box-shadow: 0 12px 25px color-mix(in srgb, var(--accent) 25%, transparent);
+    }
+
+    .btn-undo {
+      background: linear-gradient(135deg, var(--button-blue-1), var(--button-blue-2));
+      box-shadow: 0 12px 25px rgba(14, 165, 233, 0.25);
+    }
+
+    .btn-reset {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .btn-clear {
+      background: linear-gradient(135deg, var(--button-danger-1), var(--button-danger-2));
+      box-shadow: 0 12px 25px rgba(220, 38, 38, 0.25);
+    }
+
+    .status-box {
+      position: relative;
+      z-index: 2;
+      margin-top: 18px;
+      background: var(--glass-bg);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 15px;
+      color: #e0f2fe;
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 60px;
+    }
+
+    .history {
+      position: relative;
+      z-index: 2;
+      margin-top: 16px;
+    }
+
+    .history h3 {
+      font-size: 17px;
+      margin-bottom: 10px;
+    }
+
+    .history-list {
+      display: grid;
+      gap: 8px;
+      max-height: 130px;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+
+    .history-item {
+      background: rgba(255,255,255,0.07);
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-size: 13px;
+      color: var(--text-soft);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .small-note {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: var(--text-note);
+      font-size: 12px;
+      margin-top: 16px;
+      line-height: 1.5;
+    }
+
+    .complete {
+      animation: completePulse 0.8s ease;
+    }
+
+    @keyframes completePulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    @media (max-width: 430px) {
+      body {
+        align-items: flex-start;
+        padding: 12px;
+      }
+
+      .app {
+        padding: 18px;
+        border-radius: 26px;
+      }
+
+      .top {
+        margin-bottom: 18px;
+      }
+
+      .logo {
+        width: 62px;
+        height: 62px;
+        border-radius: 21px;
+        font-size: 32px;
+      }
+
+      .target-row {
+        grid-template-columns: 1fr;
+      }
+
+      .buttons {
+        grid-template-columns: 1fr;
+      }
+
+      button,
+      select,
+      input {
+        font-size: 16px;
+      }
+
+      .history-item {
+        flex-direction: column;
+        gap: 4px;
+      }
+    }
+
+    @media (max-width: 330px) {
+      .app {
+        padding: 14px;
+      }
+
+      .circle {
+        width: 205px;
+        height: 205px;
+      }
+
+      .circle-inner {
+        width: 170px;
+        height: 170px;
+      }
+    }
+  </style>
+</head>
+
+<body class="theme-emerald">
+
+  <div class="app">
+    <div class="top">
+      <div class="logo">☪</div>
+      <h1>TasbihKu</h1>
+      <p class="subtitle">Digital tasbih simple, cantik dan mudah guna. Tap untuk kira zikir harian.</p>
+    </div>
+
+    <div class="controls">
+      <div>
+        <label>Pilih Theme</label>
+        <select id="themeSelect" onchange="changeTheme()">
+          <option value="emerald">Emerald Green</option>
+          <option value="blue">Ocean Blue</option>
+          <option value="gold">Luxury Gold</option>
+          <option value="purple">Purple Night</option>
+          <option value="rose">Rose Pink</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Pilih Zikir</label>
+        <select id="zikirSelect" onchange="changeZikir()">
+          <option value="subhanallah">Subhanallah</option>
+          <option value="alhamdulillah">Alhamdulillah</option>
+          <option value="allahuakbar">Allahu Akbar</option>
+          <option value="astaghfirullah">Astaghfirullah</option>
+          <option value="lailahaillallah">La ilaha illallah</option>
+        </select>
+      </div>
+
+      <div class="target-row">
+        <div>
+          <label>Target</label>
+          <select id="targetSelect" onchange="changeTarget()">
+            <option value="33">33</option>
+            <option value="99">99</option>
+            <option value="100">100</option>
+            <option value="custom">Custom</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Custom Target</label>
+          <input type="number" id="customTarget" placeholder="Contoh 50" oninput="changeTarget()" disabled>
+        </div>
+      </div>
+    </div>
+
+    <div class="circle-wrap">
+      <div class="circle" id="progressCircle">
+        <div class="circle-inner" onclick="manualCount()">
+          <div class="count" id="count">0</div>
+          <div class="target-text">daripada <span id="targetShow">33</span></div>
+          <div class="zikir-text" id="zikirShow">Subhanallah</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="btn-main" onclick="manualCount()">Tap Kira</button>
+      <button class="btn-undo" onclick="undoCount()">Undo</button>
+      <button class="btn-reset" onclick="resetCounter()">Reset Count</button>
+      <button class="btn-clear" onclick="clearHistory()">Clear History</button>
+    </div>
+
+    <div class="status-box">
+      <div id="statusText">
+        Tekan <b>Tap Kira</b> atau tekan bulatan nombor untuk mula kira.
+      </div>
+    </div>
+
+    <div class="history">
+      <h3>History Selesai</h3>
+      <div class="history-list" id="historyList"></div>
+    </div>
+
+    <div class="small-note">
+      Made by Irsyad • Theme, count dan history disimpan dalam browser ini.
+    </div>
+  </div>
+
+  <script>
+    let count = 0;
+    let target = 33;
+    let currentZikir = "subhanallah";
+    let currentTheme = "emerald";
+    let hasCompletedCurrentTarget = false;
+
+    const zikirNames = {
+      subhanallah: "Subhanallah",
+      alhamdulillah: "Alhamdulillah",
+      allahuakbar: "Allahu Akbar",
+      astaghfirullah: "Astaghfirullah",
+      lailahaillallah: "La ilaha illallah"
+    };
+
+    function changeTheme() {
+      currentTheme = document.getElementById("themeSelect").value;
+
+      document.body.className = "";
+      document.body.classList.add("theme-" + currentTheme);
+
+      updateProgress();
+      saveState();
+      setStatus("Theme ditukar kepada <b>" + getThemeName(currentTheme) + "</b>.");
+    }
+
+    function getThemeName(theme) {
+      const names = {
+        emerald: "Emerald Green",
+        blue: "Ocean Blue",
+        gold: "Luxury Gold",
+        purple: "Purple Night",
+        rose: "Rose Pink"
+      };
+
+      return names[theme] || "Emerald Green";
+    }
+
+    function changeZikir() {
+      currentZikir = document.getElementById("zikirSelect").value;
+      document.getElementById("zikirShow").innerText = zikirNames[currentZikir];
+      saveState();
+      setStatus("Zikir ditukar kepada <b>" + zikirNames[currentZikir] + "</b>.");
+    }
+
+    function changeTarget() {
+      const targetSelect = document.getElementById("targetSelect").value;
+      const customInput = document.getElementById("customTarget");
+
+      if (targetSelect === "custom") {
+        customInput.disabled = false;
+        target = Number(customInput.value) || 1;
+      } else {
+        customInput.disabled = true;
+        target = Number(targetSelect);
+      }
+
+      if (count < target) {
+        hasCompletedCurrentTarget = false;
+      }
+
+      document.getElementById("targetShow").innerText = target;
+      updateProgress();
+      saveState();
+      setStatus("Target ditukar kepada <b>" + target + "</b>.");
+    }
+
+    function manualCount() {
+      if (count >= target) {
+        setStatus("Target sudah selesai. Tekan <b>Reset Count</b> untuk mula semula.");
+        return;
+      }
+
+      count++;
+      updateUI();
+
+      if (navigator.vibrate) {
+        navigator.vibrate(35);
+      }
+
+      if (count >= target && !hasCompletedCurrentTarget) {
+        completeTarget();
+      } else {
+        setStatus("Count naik kepada <b>" + count + "</b>.");
+      }
+    }
+
+    function undoCount() {
+      if (count <= 0) {
+        setStatus("Count masih kosong. Tak boleh undo lagi.");
+        return;
+      }
+
+      count--;
+      hasCompletedCurrentTarget = false;
+      updateUI();
+      setStatus("Undo berjaya. Count sekarang <b>" + count + "</b>.");
+    }
+
+    function updateUI() {
+      document.getElementById("count").innerText = count;
+      updateProgress();
+      saveState();
+    }
+
+    function getAccentColor() {
+      return getComputedStyle(document.body).getPropertyValue("--accent").trim() || "#22c55e";
+    }
+
+    function getEmptyProgressColor() {
+      return getComputedStyle(document.body).getPropertyValue("--empty-progress").trim() || "rgba(255,255,255,0.11)";
+    }
+
+    function updateProgress() {
+      const percentage = Math.min((count / target) * 100, 100);
+      const degree = (percentage / 100) * 360;
+      const accent = getAccentColor();
+      const empty = getEmptyProgressColor();
+
+      document.getElementById("progressCircle").style.background =
+        `conic-gradient(${accent} ${degree}deg, ${empty} ${degree}deg)`;
+    }
+
+    function resetCounter() {
+      count = 0;
+      hasCompletedCurrentTarget = false;
+      updateUI();
+      setStatus("Counter sudah di-reset. Boleh mula zikir semula.");
+    }
+
+    function completeTarget() {
+      hasCompletedCurrentTarget = true;
+
+      const circle = document.getElementById("progressCircle");
+      circle.classList.add("complete");
+      setTimeout(() => circle.classList.remove("complete"), 850);
+
+      if (navigator.vibrate) {
+        navigator.vibrate([150, 80, 150]);
+      }
+
+      const now = new Date();
+      const item = {
+        zikir: zikirNames[currentZikir],
+        count: target,
+        time: now.toLocaleString()
+      };
+
+      const history = getHistory();
+      history.unshift(item);
+      localStorage.setItem("tasbih_history", JSON.stringify(history.slice(0, 10)));
+      renderHistory();
+
+      setStatus("Alhamdulillah, target <b>" + target + "</b> untuk <b>" + zikirNames[currentZikir] + "</b> selesai.");
+      alert("Alhamdulillah, target selesai!");
+    }
+
+    function clearHistory() {
+      const confirmClear = confirm("Nak padam semua history?");
+      if (!confirmClear) return;
+
+      localStorage.removeItem("tasbih_history");
+      renderHistory();
+      setStatus("History sudah dipadam.");
+    }
+
+    function setStatus(message) {
+      document.getElementById("statusText").innerHTML = message;
+    }
+
+    function saveState() {
+      const data = {
+        count,
+        target,
+        currentZikir,
+        currentTheme,
+        hasCompletedCurrentTarget,
+        targetSelect: document.getElementById("targetSelect").value,
+        customTarget: document.getElementById("customTarget").value
+      };
+
+      localStorage.setItem("tasbih_state", JSON.stringify(data));
+    }
+
+    function loadState() {
+      const raw = localStorage.getItem("tasbih_state");
+      if (!raw) return;
+
+      try {
+        const data = JSON.parse(raw);
+
+        count = data.count || 0;
+        target = data.target || 33;
+        currentZikir = data.currentZikir || "subhanallah";
+        currentTheme = data.currentTheme || "emerald";
+        hasCompletedCurrentTarget = data.hasCompletedCurrentTarget || false;
+
+        document.getElementById("themeSelect").value = currentTheme;
+        document.body.className = "";
+        document.body.classList.add("theme-" + currentTheme);
+
+        document.getElementById("zikirSelect").value = currentZikir;
+        document.getElementById("targetSelect").value = data.targetSelect || "33";
+        document.getElementById("customTarget").value = data.customTarget || "";
+
+        if (document.getElementById("targetSelect").value === "custom") {
+          document.getElementById("customTarget").disabled = false;
+        }
+
+        document.getElementById("count").innerText = count;
+        document.getElementById("zikirShow").innerText = zikirNames[currentZikir];
+        document.getElementById("targetShow").innerText = target;
+      } catch (e) {}
+    }
+
+    function getHistory() {
+      const raw = localStorage.getItem("tasbih_history");
+      if (!raw) return [];
+
+      try {
+        return JSON.parse(raw);
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function renderHistory() {
+      const history = getHistory();
+      const list = document.getElementById("historyList");
+
+      if (history.length === 0) {
+        list.innerHTML = `<div class="history-item"><span>Belum ada history</span><span>-</span></div>`;
+        return;
+      }
+
+      list.innerHTML = history.map(item => `
+        <div class="history-item">
+          <span>${item.zikir} × ${item.count}</span>
+          <span>${item.time}</span>
+        </div>
+      `).join("");
+    }
+
+    loadState();
+    renderHistory();
+    updateProgress();
+  </script>
+
+</body>
+</html>
